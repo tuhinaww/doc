@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCycle Platform - Functional Requirements Document</title>
+    <style>
+        :root {
+            --primary-color: #2E8B57;
+            --secondary-color: #3CB371;
+            --accent-color: #6ab04c;
+            --text-color: #333;
+            --light-text: #666;
+            --background: #f9f9f9;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--background);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        h2 {
+            font-size: 28px;
+            color: var(--primary-color);
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        h3 {
+            font-size: 22px;
+            color: var(--secondary-color);
+            margin: 25px 0 15px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+        }
+        
+        .version-info {
+            background-color: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            margin-top: 15px;
+            font-weight: 500;
+        }
+        
+        .toc {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            text-align: center;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+        }
+        
+        .toc li {
+            margin-bottom: 10px;
+        }
+        
+        .toc a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+            padding: 5px 0;
+        }
+        
+        .toc a:hover {
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+        
+        .section {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .section h2 {
+            margin-top: 0;
+        }
+        
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+            margin: 30px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            border-radius: var(--border-radius);
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: left;
+            padding: 15px;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr {
+            background-color: var(--card-bg);
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        tr:hover {
+            background-color: #e9f7ef;
+        }
+        
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--light-text);
+            font-size: 14px;
+            margin-top: 30px;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .contact-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin: 10px;
+            min-width: 250px;
+            flex: 1;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .priority-high {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .priority-medium {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        
+        .priority-low {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 30px 0;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            h2 {
+                font-size: 24px;
+            }
+            
+            h3 {
+                font-size: 20px;
+            }
+            
+            .section, .toc {
+                padding: 20px;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>EcoCycle Platform</h1>
+            <p>Functional Requirements Document</p>
+            <div class="version-info">
+                Version 1.0 | April 22, 2025
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="toc" id="table-of-contents">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#introduction">1. Introduction</a></li>
+                <li><a href="#system-overview">2. System Overview</a></li>
+                <li><a href="#functional-requirements">3. Functional Requirements</a></li>
+                <li><a href="#user-roles">4. User Roles</a></li>
+                <li><a href="#use-case-summary">5. Use Case Summary</a></li>
+                <li><a href="#assumptions">6. Assumptions and Dependencies</a></li>
+                <li><a href="#non-functional">7. Non-Functional Requirements</a></li>
+                <li><a href="#appendix">Appendix</a></li>
+            </ul>
+        </div>
+        
+        <div class="section" id="introduction">
+            <h2>1. Introduction</h2>
+            
+            <h3>1.1 Purpose</h3>
+            <p>This document defines the functional requirements of the EcoCycle platform, a comprehensive waste categorization and sustainability platform that includes waste sorting, upcycling ideas, sustainability games, a marketplace for eco-products, and community connections. The document aims to provide clarity for stakeholders, developers, and testers involved in the development process.</p>
+            
+            <h3>1.2 Scope</h3>
+            <p>EcoCycle empowers users to manage waste sustainably through advanced image recognition, educational tools, and a circular economy platform. This Functional Requirements Document (FRD) covers core modules including:</p>
+            <ul>
+                <li>Waste Sorter (EcoSort)</li>
+                <li>Best Out of Waste</li>
+                <li>Eco Games</li>
+                <li>EcoMart Marketplace</li>
+                <li>EcoReuse Community</li>
+                <li>Integrated Chatbot</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="system-overview">
+            <h2>2. System Overview</h2>
+            <p>EcoCycle is a comprehensive web-based platform with the following key components:</p>
+            <ul>
+                <li><span class="highlight">Image-based waste categorization</span> using a trained machine learning model</li>
+                <li><span class="highlight">Upcycling guides</span> and sustainability education games</li>
+                <li><span class="highlight">Marketplace</span> for trading upcycled items using ERC coins</li>
+                <li><span class="highlight">NGO discovery</span> and sustainability collaboration opportunities</li>
+                <li><span class="highlight">Integration</span> with cloud and AI services</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="functional-requirements">
+            <h2>3. Functional Requirements</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Module</th>
+                        <th>Requirement Description</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>FR1</td>
+                        <td>EcoSort</td>
+                        <td>Allow users to upload or capture waste item images for classification.</td>
+                        <td class="priority-high">High</td>
+                    </tr>
+                    <tr>
+                        <td>FR2</td>
+                        <td>EcoSort</td>
+                        <td>Process image using model to determine waste category (Recyclable, Organic, Hazardous, etc.).</td>
+                        <td class="priority-high">High</td>
+                    </tr>
+                    <tr>
+                        <td>FR3</td>
+                        <td>EcoSort</td>
+                        <td>Display disposal instructions with bin color codes based on category.</td>
+                        <td class="priority-high">High</td>
+                    </tr>
+                    <tr>
+                        <td>FR4</td>
+                        <td>EcoSort</td>
+                        <td>Support JPG, PNG, WEBP formats (Max 10MB).</td>
+                        <td class="priority-high">High</td>
+                    </tr>
+                    <tr>
+                        <td>FR5</td>
+                        <td>EcoSort</td>
+                        <td>Provide feedback for image clarity or model confidence.</td>
+                        <td class="priority-medium">Medium</td>
+                    </tr>
+                    <tr>
+                        <td>FR6</td>
+                        <td>Best Out of Waste</td>
+                        <td>Provide DIY guides for converting waste into usable products.</td>
+                        <td class="priority-medium">Medium</td>
+                    </tr>
+                    <tr>
+                        <td>FR7</td>
+                        <td>Best Out of Waste</td>
+                        <td>Categorize projects by difficulty and material type.</td>
+                        <td class="priority-low">Low</td>
+                    </tr>
+                    <tr>
+                        <td>FR8</td>
+                        <td>Eco Games</td>
+                        <td>Offer 4 sustainability games: Waste Sorter, Memory Game, Forest Cleaner, Bin Guessing.</td>
+                        <td class="priority-medium">Medium</td>
+                    </tr>
+                    <tr>
+                        <td>FR9</td>
+                        <td>Eco Games</td>
+                        <td>Track user progress and assign Eco Badges.</td>
+                        <td class="priority-low">Low</td>
+                    </tr>
+                    <tr>
+                        <td>FR10</td>
+                        <td>Marketplace</td>
+                        <td>Allow users to upload, list, and sell upcycled products.</td>
+                        <td class="priority-high">High</td>
+                    </tr>
+                    <tr>
+                        <td>FR11</td>
+                        <td>Marketplace</td>
+                        <td>Enable ERC coin wallet management and reward system.</td>
+                        <td class="priority-high">High</td>
+                    </tr>
+                    <tr>
+                        <td>FR12</td>
+                        <td>Marketplace</td>
+                        <td>Allow users to browse and filter listed items.</td>
+                        <td class="priority-medium">Medium</td>
+                    </tr>
+                    <tr>
+                        <td>FR13</td>
+                        <td>EcoReuse</td>
+                        <td>Display sustainability NGOs and their accepted material types.</td>
+                        <td class="priority-medium">Medium</td>
+                    </tr>
+                    <tr>
+                        <td>FR14</td>
+                        <td>EcoReuse</td>
+                        <td>Enable users to connect with listed organizations.</td>
+                        <td class="priority-medium">Medium</td>
+                    </tr>
+                    <tr>
+                        <td>FR15</td>
+                        <td>Auth</td>
+                        <td>Enable secure login and signup functionality.</td>
+                        <td class="priority-high">High</td>
+                    </tr>
+                    <tr>
+                        <td>FR16</td>
+                        <td>Chatbot</td>
+                        <td>Provide chatbot for guided navigation and support.</td>
+                        <td class="priority-medium">Medium</td>
+                    </tr>
+                    <tr>
+                        <td>FR17</td>
+                        <td>Admin Panel</td>
+                        <td>Monitor user contributions, uploads, coins, and game performance.</td>
+                        <td class="priority-medium">Medium</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="section" id="user-roles">
+            <h2>4. User Roles</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Permissions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Guest</strong></td>
+                        <td>Browse platform, play sample game, upload waste image (limited)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Registered User</strong></td>
+                        <td>Access full features, upload/list in Marketplace, earn coins</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Admin</strong></td>
+                        <td>Manage users, oversee listings, moderate content, manage ERC coins</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="section" id="use-case-summary">
+            <h2>5. Use Case Summary</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Use Case</th>
+                        <th>Actor</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Upload Waste Image</td>
+                        <td>User</td>
+                        <td>User uploads image for categorization</td>
+                    </tr>
+                    <tr>
+                        <td>Sort Waste</td>
+                        <td>Model</td>
+                        <td>System processes image and outputs bin color and disposal info</td>
+                    </tr>
+                    <tr>
+                        <td>View DIY Guide</td>
+                        <td>User</td>
+                        <td>User explores ways to reuse waste</td>
+                    </tr>
+                    <tr>
+                        <td>Play Games</td>
+                        <td>User</td>
+                        <td>User plays educational games and earns Eco Badges</td>
+                    </tr>
+                    <tr>
+                        <td>List Product</td>
+                        <td>User</td>
+                        <td>User uploads a recycled product to EcoMart</td>
+                    </tr>
+                    <tr>
+                        <td>Buy Product</td>
+                        <td>User</td>
+                        <td>Use ERC coins to buy upcycled items</td>
+                    </tr>
+                    <tr>
+                        <td>NGO Connect</td>
+                        <td>User</td>
+                        <td>Discover and reach out to sustainability orgs</td>
+                    </tr>
+                    <tr>
+                        <td>Chatbot Help</td>
+                        <td>User</td>
+                        <td>Get guided assistance via EcoBot</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="section" id="assumptions">
+            <h2>6. Assumptions and Dependencies</h2>
+            <ul>
+                <li>Internet connectivity required for model processing</li>
+                <li>Cloud services (AWS/GCP) to support backend operations</li>
+                <li>Users will provide clean, high-quality images for better model predictions</li>
+                <li>ERC coin economy requires proper backend logic and fraud prevention mechanisms</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="non-functional">
+            <h2>7. Non-Functional Requirements</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Requirement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Performance</strong></td>
+                        <td>Model inference should complete in under 100ms</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Usability</strong></td>
+                        <td>Platform must be mobile-responsive</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security</strong></td>
+                        <td>All uploads must be scanned for malicious content</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reliability</strong></td>
+                        <td>99.5% uptime expected</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Scalability</strong></td>
+                        <td>Should support concurrent users and uploads efficiently</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="section" id="appendix">
+            <h2>Appendix</h2>
+            
+            <h3>Glossary of Terms</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Definition</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ERC Coins</strong></td>
+                        <td>EcoCycle Reward Currency used within the platform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Eco Badges</strong></td>
+                        <td>Achievements earned through platform participation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Upcycled Products</strong></td>
+                        <td>Items created by reusing waste materials</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Contact Information</h3>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h4>Project Manager</h4>
+                    <p>tt4102@srmist.edu.in</p>
+                </div>
+                <div class="contact-card">
+                    <h4>Technical Lead</h4>
+                    <p>ar2846@srmist.edu.in</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 EcoCycle Platform. All Rights Reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
